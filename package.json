@@ -1,0 +1,29 @@
+{
+  "name": "unsplajs",
+  "version": "0.0.1",
+  "description": "JavaScript API Wrapper for https://unsplash.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "unsplash",
+    "wrapper"
+  ],
+  "author": "puf17640",
+  "license": "MIT",
+  "dependencies": {
+    "@aero/centra": "1.0.6"
+  },
+  "devDependencies": {
+    "dotenv": "8.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/puf17640/unsplajs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/puf17640/unsplajs/issues"
+  },
+  "homepage": "https://github.com/puf17640/unsplajs#readme"
+}
