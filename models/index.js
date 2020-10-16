@@ -164,7 +164,15 @@ class PhotoLinks {
 		this.downloadLink = links.download;
 	}
 
+	getCustomLink(opts = {}) {
+		return `${this.rawLink}${Object.entries(opts).map(([k, v]) => `&${k}=${v}`).join('')}`
+	}
+
 	#getImage = (url) => http.request(url).raw();
+
+	async getCustomImage(opts = {}) {
+		return await this.#getImage(this.getCustomLink(opts));
+	}
 
 	async getRawImage() {
 		return await this.#getImage(this.rawLink);
@@ -248,6 +256,22 @@ class Statistics {
 	}
 }
 
+class UnsplashStatistics extends Statistics{
+	constructor(stats) {
+		super(stats);
+		this.photoCount = stats.photos || stats.new_photos;
+		this.photographers = stats.photographers || stats.new_photographers;
+		this.pixels = stats.pixels || stats.new_pixels;
+		if (stats.downloads_per_second) 
+			this.downloadsPerSecond = stats.downloads_per_second;
+		if (stats.views_per_second)
+			this.viewsPerSecond = stats.views_per_second;
+		this.developers = stats.developers || stats.new_developers;
+		this.applications = stats.applications || stats.new_applications;
+		this.requests = stats.requests || stats.new_requests;
+	}
+}
+
 class Topic {
 	#links;
 	constructor(topic) {
@@ -276,4 +300,4 @@ class Topic {
 	}
 }
 
-module.exports = { User, Photo, Collection, Statistics, Topic }
+module.exports = { User, Photo, Collection, Statistics, Topic, UnsplashStatistics }

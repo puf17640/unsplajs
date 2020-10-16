@@ -1,5 +1,5 @@
 const Unsplash = require('./index'),
-	{ User, Photo, Collection, Topic } = require('./models'),
+	{ User, Photo, Collection, Topic, UnsplashStatistics } = require('./models'),
 	{ describe, it } = require('mocha'),
 	{ should } = require('chai');
 const config = require('dotenv').config();
@@ -50,6 +50,18 @@ describe('General', () => {
 		const topics = await unsplash.getTopics();
 		should().exist(topics);
 		topics.forEach(topic => topic.should.be.an.instanceof(Topic));
+	});
+
+	it('getStats (monthly)', async () => {
+		const stats = await unsplash.getStatistics(true);
+		should().exist(stats);
+		stats.should.be.an.instanceof(UnsplashStatistics);
+	});
+
+	it('getStats (total)', async () => {
+		const stats = await unsplash.getStatistics();
+		should().exist(stats);
+		stats.should.be.an.instanceof(UnsplashStatistics);
 	});
 });
 

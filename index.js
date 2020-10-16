@@ -1,5 +1,5 @@
 const http = require('./utils/http'),
-	{ User, Photo, Collection, Topic } = require('./models');
+	{ User, Photo, Collection, Topic, UnsplashStatistics } = require('./models');
 
 class Unsplash {
 	#http;
@@ -36,6 +36,11 @@ class Unsplash {
 	async getTopics() {
 		const topics = await this.#http.get('/topics');
 		return topics.map(t => new Topic(t));
+	}
+
+	async getStatistics(monthly = false) {
+		const stats = await this.#http.get(`/stats/${monthly ? 'month' : 'total'}`);
+		return new UnsplashStatistics(stats);
 	}
 }
 
