@@ -13,10 +13,10 @@ const req = async (route, method, body) => {
 			ratelimit.remaining = res.headers['x-ratelimit-remaining'];
 			return res.json;
 		} catch(err) {
-			throw [res, err];
+			throw err;
 		}
 	} else if (res.statusCode >= 400 && res.statusCode < 500) {
-		throw res.errors;
+		throw new Error(res.json.errors.join(', '));
 	} else {
 		console.log(`reattempting, status code: ${res.statusCode}`);
 		return await req(route, method, body);
@@ -29,5 +29,6 @@ module.exports = {
 	put: async (route, body) => await req(route, 'PUT', body),
 	delete: async (route) => await req(route, 'DELETE'),
 	setAuth: (accessKey) => headers.Authorization = `Client-ID ${accessKey}`,
+	ratelimit,
 	request
 };
